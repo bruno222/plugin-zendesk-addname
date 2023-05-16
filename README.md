@@ -8,7 +8,7 @@
 
 # Pre-requisite
 
-This plugin only works when the official out-of-the-box Zendesk plugin is also installed. [So make sure to install this Zendesk Plugin one first](https://www.twilio.com/docs/flex/admin-guide/integrations/zendesk).
+This plugin only works when the official out-of-the-box Zendesk plugin is also installed. [So make sure to install this official plugin first](https://www.twilio.com/docs/flex/admin-guide/integrations/zendesk).
 
 # To install it
 
