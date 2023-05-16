@@ -25,7 +25,7 @@ export default class ZendeskAddnamePlugin extends FlexPlugin {
     // for quick testing
     // await zd.invoke('routeTo', 'user', '4809984466455');
 
-    window.Twilio.Flex.Actions.addListener('afterAcceptTask', async (payload) => {
+    flex.Actions.addListener('afterAcceptTask', async (payload) => {
       console.log(`@@@ plugin-zendesk-addname - attributes: `, payload.task.attributes);
       const { zdUser } = payload.task.attributes;
       zdUser && (await zd.invoke('routeTo', 'user', zdUser));
