@@ -1,31 +1,24 @@
-# Your custom Twilio Flex Plugin
+# Pre-requisite:
 
-Twilio Flex Plugins allow you to customize the appearance and behavior of [Twilio Flex](https://www.twilio.com/flex). If you want to learn more about the capabilities and how to use the API, check out our [Flex documentation](https://www.twilio.com/docs/flex).
+This plugin only works when the official out-of-the-box Zendesk plugin is also installed. [So make sure to install this Zendesk Plugin one first](https://www.twilio.com/docs/flex/admin-guide/integrations/zendesk).
 
-## Setup
+# To install it:
 
-Make sure you have [Node.js](https://nodejs.org) as well as [`npm`](https://npmjs.com). We support Node >= 10.12 (and recommend the _even_ versions of Node). Afterwards, install the dependencies by running `npm install`:
+```
+twilio flex:plugins:deploy -l debug --changelog "zendesk addname"
+twilio
 
-```bash
-cd 
-
-# If you use npm
-npm install
+flex:plugins:release .... ... (just copy and paste the full cli command that is appeared from the output of the previous command)
 ```
 
-Next, please install the [Twilio CLI](https://www.twilio.com/docs/twilio-cli/quickstart) by running:
+# To use it:
 
-```bash
-brew tap twilio/brew && brew install twilio
+Create a task with this attributes:
+
+```
+{"name":"bruno test","zdUser":"4809984466455"}
 ```
 
-Finally, install the [Flex Plugin extension](https://github.com/twilio-labs/plugin-flex/tree/v1-beta) for the Twilio CLI:
+Where `4809984466455` is the ID of the user in your Zendesk instance (that you can get from any URL where you are seeing the customer, example: `https://xxx.zendesk.com/agent/users/4809984466455/requested_tickets`)
 
-```bash
-twilio plugins:install @twilio-labs/plugin-flex
-```
-
-## Development
-
-Run `twilio flex:plugins --help` to see all the commands we currently support. For further details on Flex Plugins refer to our documentation on the [Twilio Docs](https://www.twilio.com/docs/flex/developer/plugins/cli) page.
-
+And that is it! You will be able to render "bruno test" within Flex before acepting the call and, once accepted, Zendesk will pop the customer id `4809984466455`.

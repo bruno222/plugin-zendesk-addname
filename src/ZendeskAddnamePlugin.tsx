@@ -2,8 +2,6 @@ import React from 'react';
 import * as Flex from '@twilio/flex-ui';
 import { FlexPlugin } from '@twilio/flex-plugin';
 
-import CustomTaskList from './components/CustomTaskList/CustomTaskList';
-
 const PLUGIN_NAME = 'ZendeskAddnamePlugin';
 
 export default class ZendeskAddnamePlugin extends FlexPlugin {
@@ -11,14 +9,26 @@ export default class ZendeskAddnamePlugin extends FlexPlugin {
     super(PLUGIN_NAME);
   }
 
-  /**
-   * This code is run when your plugin is being started
-   * Use this to modify any UI components or attach to the actions framework
-   *
-   * @param flex { typeof Flex }
-   */
   async init(flex: typeof Flex, manager: Flex.Manager): Promise<void> {
-    const options: Flex.ContentFragmentProps = { sortOrder: -1 };
-    flex.AgentDesktopView.Panel1.Content.add(<CustomTaskList key="ZendeskAddnamePlugin-component" />, options);
+    if (!(window as any).ZAFClient) {
+      throw new Error(
+        `@@@ plugin-zendesk-addname - Error 1: Cannot find any Zendesk instance on the page. Perhaps your main plugin of Zendesk (not this one, the one you enable within Flex) is disabled?`
+      );
+    }
+
+    const zd = (window as any).ZAFClient.init(null, new URL(window.location.href));
+
+    if (!zd) {
+      throw new Error(`@@@ plugin-zendesk-addname - Error 2: Strange, but "zd" was not loaded corectly. I dont know why.`);
+    }
+
+    // for quick testing
+    // await zd.invoke('routeTo', 'user', '4809984466455');
+
+    window.Twilio.Flex.Actions.addListener('afterAcceptTask', async (payload) => {
+      console.log(`@@@ plugin-zendesk-addname - attributes: `, payload.task.attributes);
+      const { zdUser } = payload.task.attributes;
+      zdUser && (await zd.invoke('routeTo', 'user', zdUser));
+    });
   }
 }
