@@ -21,7 +21,7 @@ flex:plugins:release .... ... (just copy and paste the full cli command that is 
 
 # To use it
 
-Create a task with this attributes:
+Create a task with these attributes:
 
 ```
 {"name":"bruno test","zdUser":"4809984466455"}
